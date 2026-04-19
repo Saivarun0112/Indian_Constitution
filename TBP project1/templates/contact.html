@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .back-arrow {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .header-section {
+            padding-top: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 60px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            align-items: stretch;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            min-height: 450px;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+        }
+
+        .icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .contact-description {
+            color: #546e7a;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .contact-details {
+            background: rgba(79, 172, 254, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #4facfe;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            min-height: 120px;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+
+        .contact-details.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #2c3e50;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-item strong {
+            color: #4facfe;
+            margin-right: 5px;
+            min-width: 120px;
+            text-align: left;
+            flex-shrink: 0;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+            margin-top: auto;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.5);
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+        }
+
+        .contact-btn:active {
+            transform: translateY(0);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close {
+            color: #546e7a;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #4facfe;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(79, 172, 254, 0.2);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4facfe;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            color: white;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .chat-message {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            border-left: 4px solid #ff9a9e;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                bottom: 20px;
+                left: 20px;
+                padding: 10px 16px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 40px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .contact-card {
+                padding: 40px 30px;
+                min-height: 400px;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                padding: 30px 20px;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
+                align-items: center;
+            }
+
+            .contact-item strong {
+                margin-right: 0;
+                min-width: auto;
+                text-align: center;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-button">
+            <svg class="back-arrow" viewBox="0 0 24 24">
+                <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/>
+            </svg>
+            Back to Home
+        </a>
+        
+        <div class="header-section">
+            <h1>Contact Us</h1>
+        </div>
+        
+        <div class="contact-grid">
+            <!-- Phone Support Card -->
+            <div class="contact-card">
+                <div class="icon pulse">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/>
+                    </svg>
+                </div>
+                <h2 class="contact-title">By Phone</h2>
+                <p class="contact-description">Get telephone support by calling our team members directly.</p>
+                <div class="contact-details" id="phoneDetails">
+                    <div class="contact-item">
+                        <strong>P.Saivarun:</strong> <a href="tel:8897874409" style="color: #4facfe; text-decoration: none;">8897874409</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>S.Yashwanth:</strong> <a href="tel:7093764246" style="color: #4facfe; text-decoration: none;">7093764246</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Priyanka:</strong> <a href="tel:9191916608" style="color: #4facfe; text-decoration: none;">9191916608</a>
+                    </div>
+                </div>
+                <button class="contact-btn" id="phoneBtn" onclick="togglePhoneDetails()">SHOW DETAILS</button>
+            </div>
+
+            <!-- Email Support Card -->
+            <div class="contact-card">
+                <div class="icon pulse">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20Z"/>
+                    </svg>
+                </div>
+                <h2 class="contact-title">By Email</h2>
+                <p class="contact-description">Send us your questions or concerns via email and we will respond promptly.</p>
+                <div class="contact-details" id="emailDetails">
+                    <div class="contact-item">
+                        <strong>Y.Yashwanth:</strong> <a href="mailto:245123751303@mvsrec.edu.in" style="color: #4facfe; text-decoration: none;">245123751303@mvsrec.edu.in</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>P.Saivarun:</strong> <a href="mailto:245123751057@mvsrec.edu.in" style="color: #4facfe; text-decoration: none;">245123751057@mvsrec.edu.in</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>L.Priyanka:</strong> <a href="mailto:245123751055@mvsrec.edu.in" style="color: #4facfe; text-decoration: none;">245123751055@mvsrec.edu.in</a>
+                    </div>
+                </div>
+                <button class="contact-btn" id="emailBtn" onclick="toggleEmailDetails()">SHOW DETAILS</button>
+            </div>
+
+            <!-- Live Chat Card -->
+            <div class="contact-card">
+                <div class="icon pulse">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z"/>
+                    </svg>
+                </div>
+                <h2 class="contact-title">Live Chat</h2>
+                <p class="contact-description">Get instant support through our live chat system.</p>
+                <div class="contact-details" id="chatDetails">
+                    <div class="chat-message" style="margin: 0; background: linear-gradient(135deg, #ff9a9e, #fecfef);">
+                        <h4 style="margin-bottom: 10px; color: #2c3e50;">🔴 Chat Currently Unavailable</h4>
+                        <p style="margin: 8px 0; font-size: 0.9rem;">Our administrators are not available at the moment.</p>
+                        <p style="margin: 8px 0; font-size: 0.9rem;"><strong>Alternative Options:</strong></p>
+                        <p style="margin: 5px 0; font-size: 0.85rem;">• Call us directly • Send an email<br>• Check back later when our team is online</p>
+                    </div>
+                </div>
+                <button class="contact-btn" id="chatBtn" onclick="toggleChatDetails()">SHOW DETAILS</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        function togglePhoneDetails() {
+            const details = document.getElementById('phoneDetails');
+            const btn = document.getElementById('phoneBtn');
+            
+            if (details.classList.contains('show')) {
+                details.classList.remove('show');
+                btn.textContent = 'SHOW DETAILS';
+            } else {
+                details.classList.add('show');
+                btn.textContent = 'HIDE DETAILS';
+            }
+        }
+
+        function toggleEmailDetails() {
+            const details = document.getElementById('emailDetails');
+            const btn = document.getElementById('emailBtn');
+            
+            if (details.classList.contains('show')) {
+                details.classList.remove('show');
+                btn.textContent = 'SHOW DETAILS';
+            } else {
+                details.classList.add('show');
+                btn.textContent = 'HIDE DETAILS';
+            }
+        }
+
+        function toggleChatDetails() {
+            const details = document.getElementById('chatDetails');
+            const btn = document.getElementById('chatBtn');
+            
+            if (details.classList.contains('show')) {
+                details.classList.remove('show');
+                btn.textContent = 'SHOW DETAILS';
+            } else {
+                details.classList.add('show');
+                btn.textContent = 'HIDE DETAILS';
+            }
+        }
+
+        // Add entrance animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.contact-card');
+            
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+                card.style.animation = 'fadeInUp 0.6s ease forwards';
+            });
+        });
+    </script>
+</body>
+</html>

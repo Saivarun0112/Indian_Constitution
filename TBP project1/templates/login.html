@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;padding:30px}
+    form{max-width:360px;margin:0 auto}
+    label{display:block;margin-top:12px}
+    input{width:100%;padding:8px;margin-top:6px;border-radius:4px;border:1px solid #ccc}
+    button{margin-top:16px;padding:10px 14px;background:#6a1b9a;color:#fff;border:none;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>Login</h1>
+  <form method="post" action="/login">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" required>
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required>
+
+    <button type="submit">Login</button>
+  </form>
+</body>
+</html>

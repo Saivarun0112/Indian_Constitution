@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Constitution Flashcards</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #0f0f0f, #1f1f1f);
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #ff9800;
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      width: 220px;
+      height: 140px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      position: relative;
+      border-radius: 12px;
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      padding: 15px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 500;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .card-front {
+      background: #ff9800;
+      color: #000;
+    }
+
+    .card-back {
+      background: #212121;
+      color: #ffc107;
+      transform: rotateY(180deg);
+    }
+
+    .revealed-facts {
+      margin-top: 30px;
+      max-width: 800px;
+      text-align: left;
+    }
+
+    .revealed-facts h2 {
+      color: #ff9800;
+      margin-bottom: 10px;
+    }
+
+    .revealed-facts ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      color: #e0e0e0;
+      font-size: 16px;
+    }
+
+    .back-home {
+      margin-top: 40px;
+      background-color: #d84315;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .back-home:hover {
+      background-color: #bf360c;
+    }
+
+    @media (max-width: 600px) {
+      .card-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Constitution Flashcards</h1>
+
+<div class="card-container" id="cardContainer">
+  <!-- Cards will be added dynamically -->
+</div>
+
+<div class="revealed-facts">
+  <h2>Revealed Facts:</h2>
+  <ul id="revealedList"></ul>
+</div>
+
+<a href="/games">
+  <button class="back-home">⬅ Back to Home</button>
+</a>
+
+<script>
+  const facts = [
+    "The Constitution of India came into effect on 26th January 1950.",
+    "Dr. B.R. Ambedkar is known as the Father of the Indian Constitution.",
+    "The Preamble declares India as Sovereign, Socialist, Secular, and Democratic Republic.",
+    "There are 12 Schedules in the Indian Constitution.",
+    "The 42nd Amendment is known as the 'Mini Constitution'."
+  ];
+
+  const cardContainer = document.getElementById('cardContainer');
+  const revealedList = document.getElementById('revealedList');
+  const revealedFactsSet = new Set();
+
+  facts.forEach((fact, index) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-front">Flip</div>
+        <div class="card-back">${fact}</div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+      if (!revealedFactsSet.has(index)) {
+        revealedFactsSet.add(index);
+        const li = document.createElement('li');
+        li.textContent = fact;
+        revealedList.appendChild(li);
+      }
+    });
+
+    cardContainer.appendChild(card);
+  });
+</script>
+
+</body>
+</html>

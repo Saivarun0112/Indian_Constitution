@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .feedback { border: 1px solid #ddd; padding: 12px; margin-bottom: 10px; border-radius: 6px; }
+    .meta { color: #666; font-size: 0.9rem; }
+    .delete { color: white; background: #d32f2f; padding: 6px 10px; text-decoration: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+  <p><a href="/logout">Logout</a></p>
+
+  <h2>Feedback Submissions ({{ feedbacks|length }})</h2>
+
+  {% if feedbacks|length == 0 %}
+    <p>No feedback yet.</p>
+  {% else %}
+    {% for fb in feedbacks %}
+      <div class="feedback">
+        <div><strong>{{ fb.name }}</strong> &lt;{{ fb.email }}&gt;</div>
+        <div class="meta">{{ fb.timestamp }}</div>
+        <p>{{ fb.message }}</p>
+        <a class="delete" href="/delete_feedback/{{ fb._id }}">Delete</a>
+      </div>
+    {% endfor %}
+  {% endif %}
+</body>
+</html>

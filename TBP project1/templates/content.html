@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Learn the Constitution</title>
+<style>
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #b3cde8 0%, #6699cc 100%);
+    color: #2b3e65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1 {
+    color: #336699;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 4px #aaccee88;
+  }
+
+  .topic {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 20px rgba(102, 153, 204, 0.3);
+    border-radius: 25px;
+    padding: 30px 40px;
+    margin-bottom: 35px;
+    gap: 40px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.35s ease;
+    color: #2b3e65;
+  }
+
+  .topic:nth-child(even) {
+    flex-direction: row-reverse;
+    background: rgba(204, 221, 239, 0.85);
+    border-color: #6699cc;
+  }
+
+  .topic:hover {
+    box-shadow: 0 20px 35px rgba(102, 153, 204, 0.6);
+    border-color: #336699;
+    transform: translateY(-8px);
+  }
+
+  .topic img {
+    width: 320px;
+    height: 200px;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow:
+      0 4px 15px rgba(102, 153, 204, 0.6),
+      inset 0 0 15px #6699cccc;
+    border: 4px solid #6699cc;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    flex-shrink: 0;
+  }
+
+  .topic img:hover {
+    transform: scale(1.05) rotate(1.5deg);
+    box-shadow:
+      0 6px 25px rgba(102, 153, 204, 0.9),
+      inset 0 0 20px #6699ccdd;
+  }
+
+  .topic p {
+    max-width: 680px;
+    font-size: 1.18rem;
+    line-height: 1.8;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #2b3e65;
+    text-shadow: 0 0 2px #dde8f7;
+  }
+
+  @media (max-width: 860px) {
+    .topic {
+      flex-direction: column !important;
+      text-align: center;
+      padding: 25px 20px;
+    }
+    .topic img {
+      width: 100%;
+      height: auto;
+      max-width: 400px;
+      margin-bottom: 20px;
+      border-width: 3px;
+    }
+    .topic p {
+      max-width: 100%;
+      font-size: 1.1rem;
+    }
+  }
+  @media (max-width: 450px) {
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 35px;
+    }
+  }
+
+  .back-button {
+    display: inline-block;
+    margin: 40px auto 0;
+    background: #6699cc;
+    color: #fff;
+    padding: 12px 25px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 35px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 12px #5577aaaa;
+    transition: background-color 0.3s ease;
+    text-align: center;
+  }
+
+  .back-button:hover {
+    background-color: #336699;
+    box-shadow: 0 8px 20px #335577bb;
+  }
+
+  #modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(75, 105, 150, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  #modalOverlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #modalContent {
+    position: relative;
+    max-width: 650px;
+    width: 100%;
+    background: #e6f0ff;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px #6699ccaa;
+    color: #2b3e65;
+    text-align: center;
+  }
+
+  #modalImage {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    border: 3px solid #6699cc;
+    box-shadow: 0 0 15px #6699ccbb;
+  }
+
+  #modalText {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: #2b3e65;
+  }
+
+  #modalCloseBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #6699cc;
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    box-shadow: 0 0 10px #6699cccc;
+    transition: background-color 0.3s ease;
+  }
+  #modalCloseBtn:hover {
+    background-color: #336699;
+  }
+</style>
+</head>
+<body>
+  <h1>Learn About the Constitution</h1>
+
+  <div class="topic">
+    <img src="https://static.toiimg.com/thumb/msid-95779470,width-1070,height-580,imgsize-133314,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg" alt="Indian Constitution document" />
+    <p>The Indian Constitution is the highest law of India. It was made on 26th November 1949 and started working on 26th January 1950. It set the rules for how India is governed.</p>
+  </div>
+
+  <div class="topic">
+    <img src="https://th.bing.com/th/id/OIP.OsxVqgqVtAvO0180wo2LJAAAAA?rs=1&pid=ImgDetMain" alt="Dr. B. R. Ambedkar portrait" />
+    <p>Dr. B. R. Ambedkar is called the Father of the Indian Constitution. He helped write the Constitution to make sure all people have equal rights and are treated fairly.</p>
+  </div>
+
+  <div class="topic">
+    <img src="https://static.mygov.in/indiancc/2021/08/mygov-1000000000413227856-1024x1024.jpg" alt="Preamble of the Constitution" />
+    <p>The Preamble is the introduction to the Constitution. It says India is a free and democratic country where everyone will have justice, freedom, and equality.</p>
+  </div>
+
+  <div class="topic">
+    <img src="https://i.ytimg.com/vi/EH34XjgN_2s/maxresdefault.jpg" alt="Fundamental Rights" />
+    <p>Fundamental Rights are the basic rights given to every citizen. These include the right to equality, freedom of speech, education, and protection of life.</p>
+  </div>
+
+  <div class="topic">
+    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20230419103749/Constituent-Assembly-of-India.webp" alt="Constituent Assembly of India" />
+    <p>The Constituent Assembly was a group of leaders who wrote the Constitution. They met and discussed all parts carefully before agreeing on the final rules.</p>
+  </div>
+
+  <a href="/" class="back-button">← Go Back to Main Page</a>
+
+  <div id="modalOverlay" aria-hidden="true">
+    <div id="modalContent" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+      <button id="modalCloseBtn" aria-label="Close modal">&times;</button>
+      <img id="modalImage" src="" alt="" />
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+<script>
+  const topics = document.querySelectorAll('.topic');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalImage = document.getElementById('modalImage');
+  const modalText = document.getElementById('modalText');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+  topics.forEach(topic => {
+    topic.addEventListener('click', () => {
+      const img = topic.querySelector('img');
+      const p = topic.querySelector('p');
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      modalText.textContent = p.textContent;
+      modalOverlay.classList.add('active');
+      modalOverlay.setAttribute('aria-hidden', 'false');
+    });
+  });
+
+  modalCloseBtn.addEventListener('click', () => {
+    modalOverlay.classList.remove('active');
+    modalOverlay.setAttribute('aria-hidden', 'true');
+    modalImage.src = '';
+    modalImage.alt = '';
+    modalText.textContent = '';
+  });
+
+  modalOverlay.addEventListener('click', e => {
+    if(e.target === modalOverlay){
+      modalOverlay.classList.remove('active');
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      modalImage.src = '';
+      modalImage.alt = '';
+      modalText.textContent = '';
+    }
+  });
+</script>
+</body>
+</html>

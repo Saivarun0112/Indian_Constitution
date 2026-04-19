@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spin the Wheel - Constitution Articles</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212; /* Dark background */
+      margin: 0;
+      padding: 0;
+      color: #eee;
+    }
+
+    h1 {
+      color: #ffb300; /* Bright amber */
+      text-align: center;
+      margin-top: 30px;
+      text-shadow: 0 0 8px #ffb300aa;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 30px 50px;
+      gap: 40px;
+    }
+
+    .left-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .right-panel {
+      flex: 1;
+      padding: 30px;
+      background-color: #1e1e2f; /* Deep bluish dark */
+      border-radius: 12px;
+      box-shadow: 0 0 15px #7c4dffaa;
+      font-size: 20px;
+      line-height: 1.5;
+      color: #ddd;
+      min-height: 200px;
+      user-select: none;
+      white-space: pre-line;
+    }
+
+    .wheel-container {
+      position: relative;
+    }
+
+    #arrow {
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      transform: translate(-50%, -50%) rotate(180deg);
+      width: 40px;
+      height: 40px;
+      z-index: 10;
+    }
+
+    #arrow::before {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      margin: auto;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 25px solid #ff3d00; /* bright red */
+      transform: translateX(-5px);
+      filter: drop-shadow(0 0 2px #ff3d00);
+    }
+
+    canvas {
+      border-radius: 50%;
+      box-shadow: 0 0 20px #7c4dffcc;
+      background-color: #121212; /* same as body */
+    }
+
+    .spin-btn {
+      margin-top: 25px;
+      padding: 14px 28px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      background-color: #ff6f00; /* dark orange */
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+      text-shadow: 0 0 5px #ff6f00aa;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 10px #ff6f00aa;
+      user-select: none;
+    }
+
+    .spin-btn:hover {
+      background-color: #ff8f00;
+      box-shadow: 0 0 15px #ff8f00cc;
+    }
+
+    #result {
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #7c4dff, #ff4081);
+      padding: 20px 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #7c4dffaa, 0 0 30px #ff4081aa;
+      white-space: pre-line;
+      user-select: none;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .go-back {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 12px 24px;
+      background-color: #d84315;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 0 8px #d84315aa;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .go-back:hover {
+      background-color: #bf360c;
+      box-shadow: 0 0 15px #bf360cdd;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Spin the Wheel - Constitution Articles</h1>
+
+<div class="main-container">
+  <div class="left-panel">
+    <div class="wheel-container">
+      <canvas id="wheel" width="400" height="400"></canvas>
+      <div id="arrow"></div>
+    </div>
+    <button class="spin-btn" onclick="spinWheel()">🎯 Spin</button>
+  </div>
+
+  <div class="right-panel">
+    <div id="result">🎯 Article and description will appear here</div>
+  </div>
+</div>
+
+<button class="go-back" onclick="location.href='/games'">Go Back</button>
+
+
+<script>
+  const canvas = document.getElementById('wheel');
+  const ctx = canvas.getContext('2d');
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = 180;
+
+  const articles = [
+    "Article 14", "Article 15", "Article 19", "Article 21",
+    "Article 32", "Article 44", "Article 51A", "Article 368"
+  ];
+
+  const articleDescriptions = {
+    "Article 14": "Equality before law and equal protection of laws.",
+    "Article 15": "Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth.",
+    "Article 19": "Protection of certain rights regarding freedom of speech, etc.",
+    "Article 21": "Protection of life and personal liberty.",
+    "Article 32": "Remedies for enforcement of rights conferred by Part III.",
+    "Article 44": "Uniform civil code for the citizens.",
+    "Article 51A": "Fundamental duties of every citizen of India.",
+    "Article 368": "Power of Parliament to amend the Constitution and procedure therefor."
+  };
+
+  const colors = [
+    "#5e35b1", // Deep purple
+    "#00897b", // Teal
+    "#d81b60", // Magenta
+    "#fbc02d", // Gold
+    "#3949ab", // Indigo
+    "#43a047", // Green
+    "#e53935", // Red
+    "#6a1b9a"  // Dark violet
+  ];
+
+  const anglePerSegment = (2 * Math.PI) / articles.length;
+  let currentAngle = 0;
+
+  function drawWheel() {
+    for (let i = 0; i < articles.length; i++) {
+      const startAngle = i * anglePerSegment;
+      const endAngle = startAngle + anglePerSegment;
+
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+      ctx.strokeStyle = '#222';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(startAngle + anglePerSegment / 2);
+      ctx.textAlign = "right";
+      ctx.fillStyle = "white";
+      ctx.font = "bold 18px 'Segoe UI', sans-serif";
+      ctx.fillText(articles[i], radius - 20, 10);
+      ctx.restore();
+    }
+  }
+
+  drawWheel();
+
+  function spinWheel() {
+    const extraSpins = 5;
+    const randomAngle = Math.random() * 2 * Math.PI;
+    const totalRotation = extraSpins * 2 * Math.PI + randomAngle;
+    const duration = 4000;
+
+    let start = null;
+
+    function animate(timestamp) {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      const angle = easedProgress * totalRotation;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(angle);
+      ctx.translate(-centerX, -centerY);
+      drawWheel();
+      ctx.restore();
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        currentAngle = angle % (2 * Math.PI);
+        const arrowAngle = 0;
+        const relativeAngle = (2 * Math.PI - currentAngle + arrowAngle) % (2 * Math.PI);
+        const index = Math.floor(relativeAngle / anglePerSegment);
+        const selectedArticle = articles[index];
+        const description = articleDescriptions[selectedArticle] || "No description available.";
+        document.getElementById("result").innerText = `🎯 ${selectedArticle}\n\n${description}`;
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+</script>
+
+</body>
+</html>

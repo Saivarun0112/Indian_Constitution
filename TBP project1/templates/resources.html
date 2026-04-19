@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitution Learning Project - Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .feature-card h2 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-section h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .games-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .game-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .game-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .game-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 2rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Constitution Learning Project</h1>
+            <p class="subtitle">Interactive Educational Website - Project Reference</p>
+        </header>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🧠</span>
+                <h2>Interactive Quiz System</h2>
+                <p>Complete quiz section with multiple-choice questions about the Constitution. Players get instant results and can track their progress while learning constitutional concepts.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🎮</span>
+                <h2>Educational Games</h2>
+                <p>Three engaging games designed to make Constitution learning fun: Spin Wheel, Card Flipping, and Matching Pairs - all focused on constitutional knowledge.</p>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">📸</span>
+                <h2>Visual Content Learning</h2>
+                <p>Rich visual content with images, infographics, and visual aids to help users understand complex constitutional concepts through easy-to-digest visual materials.</p>
+            </div>
+        </div>
+        
+        <section class="content-section">
+            <h2>🎯 Website Features Overview</h2>
+            
+            <div style="color: rgba(255, 255, 255, 0.9); text-align: center; margin-bottom: 2rem;">
+                <p>This Constitution learning website combines <span class="highlight">education with entertainment</span> to make constitutional learning accessible and engaging for all users.</p>
+            </div>
+            
+            <div class="games-list">
+                <div class="game-item">
+                    <span class="game-icon">🎡</span>
+                    <h3>Spin Wheel Game</h3>
+                    <p>Interactive spinning wheel with Constitution questions and facts</p>
+                </div>
+                
+                <div class="game-item">
+                    <span class="game-icon">🃏</span>
+                    <h3>Card Flipping Game</h3>
+                    <p>Memory game with constitutional terms and definitions</p>
+                </div>
+                
+                <div class="game-item">
+                    <span class="game-icon">🧩</span>
+                    <h3>Matching Pairs</h3>
+                    <p>Match amendments with their descriptions and key facts</p>
+                </div>
+                
+                <div class="game-item">
+                    <span class="game-icon">📊</span>
+                    <h3>Quiz & Results</h3>
+                    <p>Comprehensive testing system with detailed score tracking</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>📚 Learning Content Structure</h2>
+            <div style="color: rgba(255, 255, 255, 0.9); padding: 1rem;">
+                <p><strong>📖 Visual Learning Materials:</strong> Images constitutional concepts</p>
+                <p><strong>🎯 Interactive Elements:</strong> Games and quizzes for hands-on learning experience</p>
+                <p><strong>📱 Mobile-Friendly Design:</strong> Responsive layout working on all devices</p>
+                <p><strong>🎨 Engaging Interface:</strong> Modern design with smooth animations and user-friendly navigation</p>
+            </div>
+        </section>
+        
+        <footer>
+            <p><strong>Constitution Learning Project</strong></p>
+            <p>Making constitutional education accessible through interactive games, quizzes, and visual content</p>
+        </footer>
+    </div>
+</body>
+</html>

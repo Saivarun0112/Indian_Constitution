@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Constitution Matching Pairs</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #000;
+      color: #ff6f00;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff6f00;
+      font-size: 36px;
+      margin: 25px 0 10px;
+      text-shadow: 0 0 8px #ff6f00;
+      user-select: none;
+    }
+
+    .stats {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #ffc107;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 30px 40px;
+      max-width: 1280px;
+      margin: 0 auto;
+      gap: 30px;
+    }
+
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(5, 120px);
+      grid-template-rows: repeat(2, 160px);
+      grid-gap: 20px;
+      margin-left: 30px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #ff6f00, #ff8f1a);
+      color: #1a1a1a;
+      padding: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px #ff6f00cc;
+      text-align: center;
+      user-select: none;
+      letter-spacing: 0.5px;
+    }
+
+    .card.blank {
+      background-color: transparent;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    #matched-description {
+      width: 45%;
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #ff6f0022;
+      color: #ffb74d;
+      user-select: text;
+      /* No scrolling */
+    }
+
+    #matched-description h2 {
+      color: #ff6f00;
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #ff6f00bb;
+    }
+
+    .matched-item {
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ff6f0044, #ff8f1a44);
+      padding: 12px;
+      border-left: 5px solid #ff6f00;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #ffe0b2;
+      box-shadow: 0 0 12px #ff6f0099;
+    }
+
+    #reset-btn, #back-btn {
+      padding: 12px 28px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #ff6f00, #ff8f1a);
+      color: #1a1a1a;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 18px #ff6f0066;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    #reset-btn:hover, #back-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 28px #ff6f00cc;
+    }
+
+    #reset-btn {
+      display: block;
+      margin: 25px auto 60px;
+      max-width: 180px;
+    }
+
+    #back-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      max-width: 160px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Constitution Matching Pairs</h1>
+  <div class="stats">
+    ⏱ Time: <span id="timer">0</span> sec &nbsp;&nbsp;|&nbsp;&nbsp; 🧮 Score: <span id="score">0</span>
+  </div>
+
+  <div class="container">
+    <div id="game-board"></div>
+    <div id="matched-description">
+      <h2>🧠 Matched Articles</h2>
+      <div id="description-content"></div>
+    </div>
+  </div>
+
+  <button id="reset-btn" onclick="resetGame()">🔄 Reset Game</button>
+  <button id="back-btn" onclick="window.location.href='/games'">Go Back</button>
+
+  <script>
+    const articles = [
+      { id: 1, title: "Article 14", text: "Right to Equality – Equality before law and equal protection of laws." },
+      { id: 2, title: "Article 19", text: "Freedom of speech and expression, assembly, association, movement, residence, and profession." },
+      { id: 3, title: "Article 21", text: "Protection of life and personal liberty – No person shall be deprived of life or liberty except by law." },
+      { id: 4, title: "Article 32", text: "Right to constitutional remedies – The right to approach the Supreme Court for enforcement of fundamental rights." },
+      { id: 5, title: "Article 51A", text: "Fundamental Duties of Indian citizens." }
+    ];
+
+    let cardData = [...articles, ...articles].map((item, index) => ({ ...item, index }));
+    cardData.sort(() => 0.5 - Math.random());
+
+    const board = document.getElementById("game-board");
+    const descriptionContainer = document.getElementById("description-content");
+    const timerDisplay = document.getElementById("timer");
+    const scoreDisplay = document.getElementById("score");
+
+    let firstCard = null;
+    let secondCard = null;
+    let matched = [];
+    let score = 0;
+    let timer = 0;
+    let interval = null;
+
+    const flipSound = new Audio('https://www.soundjay.com/button/beep-07.wav');
+    const matchSound = new Audio('https://www.soundjay.com/button/beep-06.wav');
+
+    function startTimer() {
+      timer = 0;
+      interval = setInterval(() => {
+        timer++;
+        timerDisplay.textContent = timer;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(interval);
+    }
+
+    function updateScore() {
+      score += 10;
+      scoreDisplay.textContent = score;
+    }
+
+    function createBoard() {
+      board.innerHTML = "";
+      cardData.forEach((card, i) => {
+        if (!matched.includes(i)) {
+          const cardElement = document.createElement("div");
+          cardElement.classList.add("card");
+          cardElement.dataset.index = i;
+          cardElement.textContent = "Click";
+          cardElement.addEventListener("click", () => flipCard(i));
+          board.appendChild(cardElement);
+        }
+      });
+    }
+
+    function flipCard(index) {
+      if (matched.includes(index) || firstCard === index || secondCard !== null) return;
+
+      const card = cardData[index];
+      const cardElements = document.querySelectorAll(".card");
+      const cardElement = Array.from(cardElements).find(el => el.dataset.index == index);
+      if (cardElement) cardElement.textContent = card.title;
+
+      flipSound.play();
+
+      if (firstCard === null) {
+        firstCard = index;
+      } else {
+        secondCard = index;
+
+        const first = cardData[firstCard];
+        const second = cardData[secondCard];
+
+        if (first.id === second.id) {
+          matched.push(firstCard, secondCard);
+          matchSound.play();
+          updateScore();
+          setTimeout(() => {
+            const matchHTML = `<div class="matched-item"><strong>${first.title}:</strong> ${first.text}</div>`;
+            descriptionContainer.innerHTML += matchHTML;
+
+            if (matched.length === cardData.length) {
+              stopTimer();
+              descriptionContainer.innerHTML += `
+                <div style="
+                  text-align: center;
+                  margin-top: 30px;
+                  font-size: 20px;
+                  font-weight: bold;
+                  color: #ffd700;
+                  text-shadow: 0 0 10px #ff6f00, 0 0 5px #ffd700;
+                ">
+                  🎉 You've matched all pairs in ${timer} seconds!
+                </div>
+              `;
+            }
+
+            firstCard = null;
+            secondCard = null;
+            createBoard();
+          }, 600);
+        } else {
+          setTimeout(() => {
+            const firstEl = Array.from(cardElements).find(el => el.dataset.index == firstCard);
+            const secondEl = Array.from(cardElements).find(el => el.dataset.index == secondCard);
+            if (firstEl) firstEl.textContent = "Click";
+            if (secondEl) secondEl.textContent = "Click";
+            firstCard = null;
+            secondCard = null;
+          }, 800);
+        }
+      }
+    }
+
+    function resetGame() {
+      stopTimer();
+      startTimer();
+      cardData = [...articles, ...articles].map((item, index) => ({ ...item, index }));
+      cardData.sort(() => 0.5 - Math.random());
+      matched = [];
+      firstCard = null;
+      secondCard = null;
+      score = 0;
+      timerDisplay.textContent = "0";
+      scoreDisplay.textContent = "0";
+      descriptionContainer.innerHTML = "";
+      createBoard();
+    }
+
+    // Start game on load
+    startTimer();
+    createBoard();
+  </script>
+
+</body>
+</html>

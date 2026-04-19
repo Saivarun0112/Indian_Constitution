@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indian Constitution Learning</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+  position: relative;
+  background-color: #ffffff;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('https://images.mid-day.com/images/images/2023/jan/iStock-1296965095_d.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  filter: brightness(1.5); /* increase brightness (values >1 lighten) */
+  opacity: 0.5; /* also reduce opacity if needed */
+  z-index: -1; /* behind content */
+}
+
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 100vh;
+      background-color: #6a1b9a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 15px;
+      transition: width 0.3s ease;
+      overflow: hidden;
+      z-index: 1000;
+    }
+    .sidebar:hover {
+      width: 230px;
+    }
+    .sidebar:hover .label {
+      display: inline;
+    }
+    .sidebar .brand {
+      color: #e1bee7;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1rem;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover {
+      background-color: #4a148c;
+    }
+    .sidebar i {
+      margin-right: 10px;
+      font-size: 1.3rem;
+      min-width: 40px;
+      text-align: center;
+    }
+    .label {
+      display: none;
+      white-space: nowrap;
+    }
+
+    .content {
+      margin-left: 60px;
+      flex: 1;
+      padding: 40px 20px;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header-section h1 {
+      font-size: 3rem;
+      color: #4a148c;
+    }
+    .header-section p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #7b1fa2;
+    }
+    .divider {
+      margin: 25px auto 40px auto;
+      height: 3px;
+      width: 80%;
+      background-color: #ba68c8;
+      border-radius: 3px;
+    }
+
+    .button-section {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+    .button-section a {
+      background-color: #8e24aa;
+      color: white;
+      padding: 20px 40px;
+      text-decoration: none;
+      font-size: 1.3rem;
+      font-weight: 600;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(142, 36, 170, 0.4);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .button-section a:hover {
+      background-color: #4a148c;
+      transform: translateY(-3px);
+    }
+
+    .about-section {
+      background-color: #ede7f6;
+      padding: 30px;
+      border-radius: 10px;
+      margin-top: 0;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .about-section h2 {
+      color: #6a1b9a;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .about-section p {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: #4a148c;
+    }
+    .about-section ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+    .about-section li {
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+      color: #4a148c;
+    }
+
+    /* Feedback Button */
+    .feedback-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #8e24aa;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(142, 36, 170, 0.5);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .feedback-btn:hover {
+      background-color: #4a148c;
+      transform: translateY(-3px);
+    }
+
+    /* Admin Button */
+    .admin-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(211, 47, 47, 0.5);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .admin-btn:hover {
+      background-color: #b71c1c;
+      transform: translateY(-3px);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1200;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 25px 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-content h3 {
+      margin-bottom: 20px;
+      color: #6a1b9a;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+    .modal-content label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #4a148c;
+    }
+    .modal-content input[type="text"],
+    .modal-content input[type="email"],
+    .modal-content input[type="password"],
+    .modal-content textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1.5px solid #ba68c8;
+      font-size: 1rem;
+      margin-bottom: 18px;
+      resize: vertical;
+      font-family: inherit;
+      color: #4a148c;
+    }
+    .modal-content textarea {
+      height: 120px;
+      line-height: 1.4;
+    }
+    .modal-content button.submit-btn {
+      background-color: #8e24aa;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 0 auto;
+      margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(142, 36, 170, 0.5);
+    }
+    .modal-content button.submit-btn:hover {
+      background-color: #4a148c;
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: #6a1b9a;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .modal-close:hover {
+      color: #4a148c;
+    }
+
+    /* Admin Panel Styles */
+    .admin-content {
+      max-width: 900px;
+    }
+    .feedback-item {
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-left: 4px solid #8e24aa;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .feedback-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .feedback-item h4 {
+      color: #6a1b9a;
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    .feedback-item .email {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .feedback-item .timestamp {
+      color: #999;
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+    .feedback-message {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 3px solid #8e24aa;
+      margin-top: 15px;
+    }
+    .feedback-message p {
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      font-size: 1rem;
+    }
+    .feedback-counter {
+      background-color: #8e24aa;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .admin-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+    }
+    .delete-all-btn {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .delete-all-btn:hover {
+      background-color: #b71c1c;
+    }
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .delete-btn:hover {
+      background-color: #d32f2f;
+    }
+    .feedback-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .no-feedback {
+      text-align: center;
+      color: #777;
+      font-style: italic;
+      padding: 40px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      border: 2px dashed #ddd;
+    }
+
+    /* Success Message */
+    .success-message {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      text-align: center;
+      display: none;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 600px) {
+      .button-section {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .button-section a {
+        padding: 15px 25px;
+        font-size: 1.2rem;
+      }
+      .fixed-buttons {
+        bottom: 15px;
+        right: 15px;
+      }
+      .feedback-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+      .admin-btn {
+        top: 15px;
+        right: 15px;
+        padding: 10px 18px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="sidebar" aria-label="Primary navigation" aria-expanded="false" role="navigation" tabindex="0">
+    <div class="brand">Learn</div>
+    <a href="/"><i class="fas fa-home"></i><span class="label">Home</span></a>
+    <a href="/quiz"><i class="fas fa-question-circle"></i><span class="label">Quiz</span></a>
+    <a href="/games"><i class="fas fa-gamepad"></i><span class="label">Games</span></a>
+    <a href="/content"><i class="fas fa-book-open"></i><span class="label">Content</span></a>
+    <a href="/resources"><i class="fas fa-folder-open"></i><span class="label">Resources</span></a>
+    <a href="/about"><i class="fas fa-info-circle"></i><span class="label">About</span></a>
+    <a href="/contact"><i class="fas fa-envelope"></i><span class="label">Contact Us</span></a>
+  </nav>
+
+  <main class="content" role="main" tabindex="-1">
+    <section class="header-section">
+      <h1>Welcome to Indian Constitution Learning</h1>
+      <p>Empowering students to understand their rights and responsibilities.</p>
+      <div class="divider"></div>
+    </section>
+
+    <section class="button-section" aria-label="Main navigation buttons">
+      <a href="/quiz"><i class="fas fa-question-circle"></i> Quiz</a>
+      <a href="/games"><i class="fas fa-gamepad"></i> Games</a>
+      <a href="/content"><i class="fas fa-book-open"></i> Content</a>
+    </section>
+
+    <section class="about-section" aria-label="About this platform">
+      <h2>About This Platform</h2>
+      <p>This platform helps you explore the Indian Constitution through interactive content.</p>
+      <p>Quizzes and games make learning fun and engaging.</p>
+      <p>Get ready to discover your fundamental rights, duties, and much more!</p>
+      <ul>
+        <li>Interactive Quizzes on Constitution</li>
+        <li>Educational Games for Students</li>
+        <li>Detailed Notes & Articles</li>
+        <li>Designed for all age groups</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Fixed Buttons -->
+  <button class="feedback-btn" onclick="openFeedbackModal()">
+    <i class="fas fa-comment"></i> Feedback
+  </button>
+  <button type="button" class="admin-btn" onclick="openAdminModal()">
+    <i class="fas fa-user-shield"></i> Admin
+  </button>
+
+  <!-- Admin Modal (server-backed) -->
+  <div id="adminModal" class="modal">
+    <div class="modal-content admin-content">
+      <button class="modal-close" onclick="closeAdminModal()">&times;</button>
+      <h3>Admin Panel</h3>
+      
+      <!-- Password Section -->
+      <div id="adminLogin">
+        <label for="adminPassword">Enter Admin Password:</label>
+        <input type="password" id="adminPassword" placeholder="Enter password...">
+        <button type="button" class="submit-btn" onclick="adminAuthenticate()">Access Admin Panel</button>
+      </div>
+      
+      <!-- Feedback Display Section -->
+      <div id="adminContent" style="display: none;">
+        <div class="admin-controls">
+          <h4 style="color: #6a1b9a; margin: 0;">📋 Feedback Management</h4>
+          <button class="delete-all-btn" onclick="deleteAllFeedback()">
+            <i class="fas fa-trash-alt"></i> Delete All Feedback
+          </button>
+        </div>
+        <div id="feedbackList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeFeedbackModal()">&times;</button>
+      <h3>Share Your Feedback</h3>
+      <div class="success-message" id="feedbackSuccess">
+        Thank you for your feedback! We appreciate your input.
+      </div>
+      <form id="feedbackForm" method="post" action="/submit_feedback">
+        <label for="feedbackName">Name:</label>
+        <input type="text" id="feedbackName" name="name" required>
+        
+        <label for="feedbackEmail">Email:</label>
+        <input type="email" id="feedbackEmail" name="email" required>
+        
+        <label for="feedbackMessage">Feedback Message:</label>
+        <textarea id="feedbackMessage" name="message" placeholder="Please share your thoughts, suggestions, or any issues you encountered..." required></textarea>
+        
+        <button type="submit" class="submit-btn">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    // Feedback Modal Functions
+    function openFeedbackModal() {
+      document.getElementById('feedbackModal').style.display = 'flex';
+    }
+    function closeFeedbackModal() {
+      document.getElementById('feedbackModal').style.display = 'none';
+      document.getElementById('feedbackSuccess').style.display = 'none';
+      document.getElementById('feedbackForm').reset();
+    }
+    // Admin Modal Functions
+    function openAdminModal() {
+      document.getElementById('adminModal').style.display = 'flex';
+      document.getElementById('adminLogin').style.display = 'block';
+      document.getElementById('adminContent').style.display = 'none';
+      document.getElementById('adminPassword').value = '';
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').style.display = 'none';
+    }
+
+    async function adminAuthenticate() {
+      const pwd = document.getElementById('adminPassword').value;
+      if (!pwd) return alert('Enter password');
+      try {
+        const res = await fetch('/admin_auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pwd })
+        });
+        if (res.ok) {
+          document.getElementById('adminLogin').style.display = 'none';
+          document.getElementById('adminContent').style.display = 'block';
+          loadFeedbacks();
+        } else {
+          alert('Invalid admin password');
+        }
+      } catch (e) {
+        alert('Auth error');
+      }
+    }
+
+    async function loadFeedbacks() {
+      try {
+        const res = await fetch('/feedbacks.json');
+        if (!res.ok) return alert('Unable to load feedbacks');
+        const data = await res.json();
+        renderFeedbacks(data);
+      } catch (e) {
+        alert('Error loading feedbacks');
+      }
+    }
+
+    function renderFeedbacks(feedbackData) {
+      const feedbackList = document.getElementById('feedbackList');
+      if (!feedbackData || feedbackData.length === 0) {
+        feedbackList.innerHTML = '<div class="no-feedback">📝 No feedback submissions yet.<br>Waiting for student feedback...</div>';
+        return;
+      }
+      let html = `<div class="feedback-counter">📊 Total Feedback: ${feedbackData.length}</div>`;
+      feedbackData.slice().reverse().forEach((fb) => {
+        html += `
+          <div class="feedback-item">
+            <div class="feedback-header">
+              <div>
+                <h4>👤 ${escapeHtml(fb.name || '')}</h4>
+                <p class="email">📧 ${escapeHtml(fb.email || '')}</p>
+              </div>
+              <div class="feedback-actions">
+                <div class="timestamp">🕒 ${escapeHtml(fb.timestamp || '')}</div>
+                <button class="delete-btn" onclick="deleteFeedback('${fb.id}')">
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+              </div>
+            </div>
+            <div class="feedback-message">
+              <p><strong>💬 Message:</strong></p>
+              <p>${escapeHtml(fb.message || '')}</p>
+            </div>
+          </div>
+        `;
+      });
+      feedbackList.innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    async function deleteFeedback(id) {
+      if (!confirm('Delete this feedback?')) return;
+      try {
+        const res = await fetch('/delete_feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        if (res.ok) loadFeedbacks(); else alert('Delete failed');
+      } catch (e) { alert('Delete error'); }
+    }
+
+    async function deleteAllFeedback() {
+      if (!confirm('Delete ALL feedback? This cannot be undone.')) return;
+      try {
+        const res = await fetch('/delete_all_feedbacks', { method: 'POST' });
+        if (res.ok) loadFeedbacks(); else alert('Delete failed');
+      } catch (e) { alert('Delete error'); }
+    }
+
+    // Open admin modal when admin button clicked (inline onclick triggers openAdminModal)
+
+    // Close modals when clicking outside (feedback modal only)
+    window.onclick = function(event) {
+      const feedbackModal = document.getElementById('feedbackModal');
+      if (event.target === feedbackModal) {
+        closeFeedbackModal();
+      }
+    }
+
+    // Close feedback modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeFeedbackModal();
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
